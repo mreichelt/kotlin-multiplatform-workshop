@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
 
 class HabitSerializationTest {
 
-
     @Test
     fun `encode a habit`() {
         val jogging = Habit(

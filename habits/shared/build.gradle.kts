@@ -9,6 +9,7 @@ plugins {
 
 kotlin {
     android()
+    jvm()
 
     listOf(
         iosX64(),

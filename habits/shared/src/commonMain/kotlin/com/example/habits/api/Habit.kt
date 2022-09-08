@@ -12,3 +12,8 @@ data class Habit(
     val name: String,
     val description: String = "",
 )
+
+@Serializable
+class HabitsResponse(
+    val habits: List<Habit>,
+)

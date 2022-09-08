@@ -1,7 +1,6 @@
 package com.example.habits.api
 
 import com.benasher44.uuid.uuidFrom
-import com.example.habits.api.KtorHabitApi
 import io.ktor.http.*
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
@@ -13,12 +12,13 @@ import kotlin.test.assertEquals
 class HabitsApiTest {
 
     private val server = MockWebServer()
+    private val api = KtorHabitApi(Url(server.url("").toString()))
 
     @Test
     fun loadEmptyHabits() = runTest {
         server.enqueue(MockResponse().setBody("""{"habits": []}"""))
 
-        val habits: List<Habit> = KtorHabitApi(Url(server.url("").toString())).getHabits()
+        val habits: List<Habit> = api.getHabits().habits
         assertTrue(habits.isEmpty())
     }
 
@@ -37,7 +37,7 @@ class HabitsApiTest {
             )
         )
 
-        val habits: List<Habit> = KtorHabitApi(Url(server.url("").toString())).getHabits()
+        val habits: List<Habit> = api.getHabits().habits
         assertEquals(
             expected = listOf(
                 Habit(id = uuidFrom("00000000-0000-0000-0000-000000000001"), name = "one"),

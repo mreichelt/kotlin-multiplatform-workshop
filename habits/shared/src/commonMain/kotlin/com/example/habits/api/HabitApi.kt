@@ -9,21 +9,16 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 interface HabitApi {
-    suspend fun getHabits(): List<Habit>
+    suspend fun getHabits(): HabitsResponse
 }
 
 class KtorHabitApi(private val baseUrl: Url) : HabitApi {
 
-    override suspend fun getHabits(): List<Habit> {
+    override suspend fun getHabits(): HabitsResponse {
         val response = client.get(baseUrl) {
             url { appendPathSegments("habits") }
         }
-        return Json.decodeFromString<HabitsResponse>(response.body()).habits
+        return Json.decodeFromString(response.body())
     }
 
 }
-
-@Serializable
-private class HabitsResponse(
-    val habits: List<Habit>,
-)

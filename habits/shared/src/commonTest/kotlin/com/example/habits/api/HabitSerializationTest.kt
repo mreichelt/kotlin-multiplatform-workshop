@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 class HabitSerializationTest {
 
     @Test
-    fun `encode a habit`() {
+    fun encodeHabit() {
         val jogging = Habit(
             id = uuidFrom("24fdbe87-8f63-4e6a-a3c7-ede48031ebc1"),
             name = "Jogging",
@@ -33,7 +33,7 @@ class HabitSerializationTest {
     }
 
     @Test
-    fun `decode a habit`() {
+    fun decodeHabit() {
         val json = """
             {
                 "id": "24fdbe87-8f63-4e6a-a3c7-ede48031ebc1",

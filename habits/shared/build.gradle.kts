@@ -18,18 +18,35 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+        }
+
+        val ktorVersion = "2.1.1"
+
         val commonMain by getting {
             dependencies {
                 implementation("com.benasher44:uuid:0.5.0")
+
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                implementation("io.ktor:ktor-client-resources:$ktorVersion")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
             }
         }
         val androidMain by getting
+        val androidTest by getting {
+            dependencies {
+                implementation("com.squareup.okhttp3:mockwebserver:4.10.0")
+            }
+        }
 
         val iosX64Main by getting
         val iosArm64Main by getting

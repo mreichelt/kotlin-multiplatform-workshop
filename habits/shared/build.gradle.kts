@@ -1,3 +1,6 @@
+val ktor_version: String by project
+val kotlin_version: String by project
+
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
@@ -22,17 +25,15 @@ kotlin {
             languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
 
-        val ktorVersion = "2.1.1"
-
         val commonMain by getting {
             dependencies {
                 implementation("com.benasher44:uuid:0.5.0")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
 
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
-                implementation("io.ktor:ktor-client-resources:$ktorVersion")
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("io.ktor:ktor-client-cio:$ktor_version")
+                implementation("io.ktor:ktor-client-resources:$ktor_version")
             }
         }
         val commonTest by getting {

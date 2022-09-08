@@ -9,3 +9,4 @@ pluginManagement {
 rootProject.name = "Habits"
 include(":androidApp")
 include(":shared")
+include(":backend")

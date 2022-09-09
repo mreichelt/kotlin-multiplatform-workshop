@@ -1,6 +1,7 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val compose_version: String by project
 val ktor_version: String by project
 val kotlin_version: String by project
 val store_version: String by project
@@ -52,9 +53,22 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
             }
         }
+        val composeMain by creating {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.runtime)
+                implementation(compose.ui)
+            }
+        }
         val androidMain by getting {
             dependencies {
-                implementation(compose.foundation)
+                implementation("androidx.compose.foundation:foundation:$compose_version")
+                implementation("androidx.compose.material:material:$compose_version")
+                implementation("androidx.compose.material:runtime:$compose_version")
+                implementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
+
                 implementation("com.dropbox.mobile.store:store4:$store_version")
                 implementation("com.squareup.sqldelight:android-driver:$sqldelight_version")
             }
@@ -67,7 +81,8 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                implementation(compose.foundation)
+                dependsOn(composeMain)
+
                 implementation("com.squareup.sqldelight:sqlite-driver:$sqldelight_version")
             }
         }
@@ -110,6 +125,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = compose_version
     }
 }
 

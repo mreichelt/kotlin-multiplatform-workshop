@@ -64,10 +64,9 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("androidx.compose.foundation:foundation:$compose_version")
                 implementation("androidx.compose.material:material:$compose_version")
-                implementation("androidx.compose.material:runtime:$compose_version")
                 implementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
+                implementation("androidx.compose.ui:ui-tooling:$compose_version")
 
                 implementation("com.dropbox.mobile.store:store4:$store_version")
                 implementation("com.squareup.sqldelight:android-driver:$sqldelight_version")

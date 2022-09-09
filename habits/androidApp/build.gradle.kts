@@ -40,11 +40,11 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("androidx.compose.material:material:$compose_version")
-    implementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
+    implementation("androidx.compose.ui:ui-tooling:$compose_version")
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.squareup.sqldelight:coroutines-extensions:$sqldelight_version")
 
-    debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
+    debugImplementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

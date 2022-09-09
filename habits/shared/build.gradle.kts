@@ -1,10 +1,17 @@
+import org.jetbrains.compose.compose
+
 val ktor_version: String by project
 val kotlin_version: String by project
+val store_version: String by project
+val sqldelight_version: String by project
 
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+
     id("com.android.library")
+    id("com.squareup.sqldelight")
+    id("org.jetbrains.compose")
 }
 
 kotlin {
@@ -23,11 +30,14 @@ kotlin {
 
     sourceSets {
         all {
+            languageSettings.optIn("kotlin.RequiresOptIn")
             languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
 
         val commonMain by getting {
             dependencies {
+                implementation(compose.foundation)
+
                 implementation("com.benasher44:uuid:0.5.0")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
@@ -43,10 +53,23 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(compose.foundation)
+                implementation("com.dropbox.mobile.store:store4:$store_version")
+                implementation("com.squareup.sqldelight:android-driver:$sqldelight_version")
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation("com.squareup.okhttp3:mockwebserver:4.10.0")
+            }
+        }
+
+        val jvmMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation("com.squareup.sqldelight:sqlite-driver:$sqldelight_version")
             }
         }
 
@@ -58,6 +81,10 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+
+            dependencies {
+                implementation("com.squareup.sqldelight:native-driver:$sqldelight_version")
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -78,4 +105,24 @@ android {
         minSdk = 28
         targetSdk = 32
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.0"
+    }
+}
+
+compose.desktop {
+    application.mainClass = "MainKt"
+}
+
+sqldelight {
+    database("Database") {
+        packageName = "com.example.habits"
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
 }

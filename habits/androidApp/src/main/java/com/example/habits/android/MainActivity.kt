@@ -40,8 +40,8 @@ fun Main() {
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
+@Preview(showSystemUi = true)
 fun MainPreview() {
     Main()
 }

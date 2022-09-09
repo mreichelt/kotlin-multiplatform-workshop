@@ -1,0 +1,17 @@
+CREATE TABLE habit(
+    id TEXT NOT NULL UNIQUE PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT
+);
+
+selectAll:
+    SELECT * FROM habit;
+
+selectById:
+    SELECT * FROM habit WHERE id IS :id;
+
+insertOrReplace:
+    INSERT OR REPLACE INTO habit VALUES :habit;
+
+deleteAll:
+    DELETE FROM habit;

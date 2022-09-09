@@ -9,11 +9,3 @@ actual class DriverFactory(private val context: Context) {
         return AndroidSqliteDriver(Database.Schema, context, "habit.db")
     }
 }
-
-/*@Composable
-actual fun rememberDriverFactory(): DriverFactory {
-    val context = LocalContext.current
-    return remember(context) {
-        DriverFactory(context)
-    }
-}*/

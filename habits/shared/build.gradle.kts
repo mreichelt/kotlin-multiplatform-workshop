@@ -36,8 +36,6 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(compose.foundation)
-
                 implementation("com.benasher44:uuid:0.5.0")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
@@ -68,7 +66,7 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                implementation(compose.desktop.currentOs)
+                implementation(compose.foundation)
                 implementation("com.squareup.sqldelight:sqlite-driver:$sqldelight_version")
             }
         }
@@ -108,8 +106,9 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 

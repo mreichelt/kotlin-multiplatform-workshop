@@ -1,8 +1,7 @@
-import org.jetbrains.compose.compose
+val compose_version: String by project
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.compose")
     kotlin("android")
 }
 
@@ -27,22 +26,23 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = compose_version
+    }
 }
 
 dependencies {
     implementation(project(":shared"))
 
-    implementation(compose.foundation)
-    implementation(compose.material)
-    implementation(compose.preview)
-    implementation(compose.uiTooling)
-
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
-
     implementation("androidx.activity:activity-compose:1.5.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("androidx.compose.material:material:$compose_version")
+    implementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
+    implementation("com.google.android.material:material:1.6.1")
+
+    debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

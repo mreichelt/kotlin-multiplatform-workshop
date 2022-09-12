@@ -1,15 +1,13 @@
 package com.example.stopwatch
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 
 class StopwatchViewModel {
 
     private val _stopwatchFlow = MutableStateFlow("0")
     val stopwatchFlow: StateFlow<String> = _stopwatchFlow.asStateFlow()
-    private val scope = CoroutineScope(Dispatchers.Main.immediate)
+    private val scope = CoroutineScope(Dispatchers.Main)
 
     fun start() {
         scope.launch {
@@ -28,4 +26,14 @@ class StopwatchViewModel {
         scope.cancel()
     }
 
+}
+
+fun interface Closeable {
+    fun close()
+}
+
+fun <T> Flow<T>.watch(block: (T) -> Unit): Closeable {
+    val coroutineScope = CoroutineScope(Dispatchers.Main)
+    onEach { block(it) }.launchIn(coroutineScope)
+    return Closeable { coroutineScope.cancel() }
 }
